@@ -16,7 +16,6 @@ namespace RentApp.Controllers
 {
     public class ServicesController : ApiController
     {
-        private RADBContext db;
         private readonly IUnitOfWork uow;
 
         public ServicesController(IUnitOfWork uow)
@@ -34,7 +33,7 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Service))]
         public IHttpActionResult GetService(int id)
         {
-            Service service = db.Services.Find(id);
+            Service service = uow.Services.Find(i => i.Id == id).FirstOrDefault();
             if (service == null)
             {
                 return NotFound();
@@ -44,6 +43,7 @@ namespace RentApp.Controllers
         }
 
         // PUT: api/Services/5
+        //Izmena
         [ResponseType(typeof(void))]
         public IHttpActionResult PutService(int id, Service service)
         {
@@ -57,11 +57,13 @@ namespace RentApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(service).State = EntityState.Modified;
+            var modified_service = uow.Services.Find(i => i.Id == id).FirstOrDefault();
+            modified_service = service;
+            uow.Services.ModifyState(modified_service);
 
             try
             {
-                db.SaveChanges();
+                uow.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -87,8 +89,8 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Services.Add(service);
-            db.SaveChanges();
+            uow.Services.Add(service);
+            uow.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
         }
@@ -97,14 +99,14 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Service))]
         public IHttpActionResult DeleteService(int id)
         {
-            Service service = db.Services.Find(id);
+            Service service = uow.Services.Find(i => i.Id == id).FirstOrDefault();
             if (service == null)
             {
                 return NotFound();
             }
 
-            db.Services.Remove(service);
-            db.SaveChanges();
+            uow.Services.Remove(service);
+            uow.Complete();
 
             return Ok(service);
         }
@@ -120,7 +122,7 @@ namespace RentApp.Controllers
 
         private bool ServiceExists(int id)
         {
-            return db.Services.Count(e => e.Id == id) > 0;
+            return uow.Services.Find(e => e.Id == id).ToList().Count > 0;
         }
     }
 }

@@ -24,16 +24,24 @@ namespace RentApp.Persistance.Repository.Implementations
             return Context.Services.Include(s => s.Manager).Where(s => !s.Approved);
         }
 
+
+
+
         public void AddNewVehicle(Vehicle vehicle, Service service)
         {
             var s = Context.Services.FirstOrDefault(x => x.Id == service.Id);
-            s?.Vehicles.Add(vehicle);
+            s.Vehicles.Add(vehicle);
         }
 
         public void RemoveVehicle(Vehicle vehicle, Service service)
         {
             var s = Context.Services.FirstOrDefault(x => x.Id == service.Id);
             s?.Vehicles.Remove(vehicle);
+        }
+
+        public void ModifyState(Service service)
+        {
+            context.Entry(service).State = EntityState.Modified;
         }
     }
 }

@@ -8,6 +8,6 @@ namespace RentApp.Persistance.Repository.Interfaces
         IEnumerable<Service> GetAllNonApproved();
         void AddNewVehicle(Vehicle vehicle, Service service);
         void RemoveVehicle(Vehicle vehicle, Service service);
-        
+        void ModifyState(Service service);
     }
 }
