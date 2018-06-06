@@ -13,21 +13,27 @@ namespace RentApp.Models.Entities
         public List<BranchOffice> Offices { get; set; }
         public string ImagePath { get; set; }
         public List<Vehicle> Vehicles { get; set; }
+        public int ManagerId { get; set; }
         public AppUser Manager { get; set; }
         public string Description { get; set; }
         public string Email { get; set; }
 
-        public Service(string name, string image, AppUser manager, string description, string email)
+        public Service()
         {
-            Name = name;
-            ImagePath = image;
-            Manager = manager;
-            Description = description;
-            Email = email;
-            Approved = false;
-            Offices = new List<BranchOffice>();
-            Vehicles = new List<Vehicle>();
+
         }
+
+        //public Service(string name, string image, AppUser manager, string description, string email)
+        //{
+        //    Name = name;
+        //    ImagePath = image;
+        //    Manager = manager;
+        //    Description = description;
+        //    Email = email;
+        //    Approved = false;
+        //    Offices = new List<BranchOffice>();
+        //    Vehicles = new List<Vehicle>();
+        //}
     }
     
 }

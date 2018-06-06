@@ -19,6 +19,11 @@ namespace RentApp.Persistance.Repository.Implementations
             return Context.Services.Where(s => !s.Approved);
         }
 
+        public IEnumerable<Service> GetAllNonApproveda()
+        {
+            return Context.Services.Include(s => s.Manager).Where(s => !s.Approved);
+        }
+
         public void AddNewVehicle(Vehicle vehicle, Service service)
         {
             var s = Context.Services.FirstOrDefault(x => x.Id == service.Id);

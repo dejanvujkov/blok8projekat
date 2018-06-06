@@ -10,22 +10,24 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
+using RentApp.Persistance.UnitOfWork;
 
 namespace RentApp.Controllers
 {
     public class ServicesController : ApiController
     {
         private RADBContext db;
+        private readonly IUnitOfWork uow;
 
-        public ServicesController(DbContext context)
+        public ServicesController(IUnitOfWork uow)
         {
-            db = context as RADBContext;
+            this.uow = uow;
         }
 
         // GET: api/Services
-        public IQueryable<Service> GetServices()
+        public IEnumerable<Service> GetServices()
         {
-            return db.Services;
+            return uow.Services.GetAll();
         }
 
         // GET: api/Services/5
@@ -111,7 +113,7 @@ namespace RentApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                uow.Dispose();
             }
             base.Dispose(disposing);
         }
