@@ -17,6 +17,7 @@ using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Providers;
 using RentApp.Results;
+using RentApp.Persistance.UnitOfWork;
 
 namespace RentApp.Controllers
 {
@@ -25,16 +26,17 @@ namespace RentApp.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
-
+        private readonly IUnitOfWork uow;
         public AccountController()
         {
         }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IUnitOfWork uow)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            this.uow = uow;
         }
 
         public ApplicationUserManager UserManager { get; private set; }
@@ -311,16 +313,31 @@ namespace RentApp.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public IHttpActionResult Register(RegisterBindingModel model)
         {
+            AppUser appUser = new AppUser()
+            {
+                Name = model.Name,
+                Surname = model.Surname,
+                Approved = false,
+                ImagePath = ""
+            };
+
+         
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = new RAIdentityUser() { UserName = model.Email, Email = model.Email };
+            var user = new RAIdentityUser() {
+                UserName = model.Username,
+                Email = model.Email,
+                AppUser = appUser,       
+                Id = model.Username        
+            };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result = UserManager.Create(user, model.Password);
 
             if (!result.Succeeded)
             {

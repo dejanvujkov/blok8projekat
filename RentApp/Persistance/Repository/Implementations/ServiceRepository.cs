@@ -38,10 +38,5 @@ namespace RentApp.Persistance.Repository.Implementations
             var s = Context.Services.FirstOrDefault(x => x.Id == service.Id);
             s?.Vehicles.Remove(vehicle);
         }
-
-        public void ModifyState(Service service)
-        {
-            context.Entry(service).State = EntityState.Modified;
-        }
     }
 }

@@ -16,8 +16,10 @@ namespace RentApp.Persistance
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
 
+        public Guid id;
         public RADBContext() : base("name=RADB")
         {
+            id = Guid.NewGuid();
         }
 
         public static RADBContext Create()

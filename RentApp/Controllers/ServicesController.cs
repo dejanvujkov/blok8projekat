@@ -45,36 +45,21 @@ namespace RentApp.Controllers
         // PUT: api/Services/5
         //Izmena
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutService(int id, Service service)
+        public IHttpActionResult PutService(Service service)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != service.Id)
-            {
-                return BadRequest();
-            }
-
-            var modified_service = uow.Services.Find(i => i.Id == id).FirstOrDefault();
-            modified_service = service;
-            uow.Services.ModifyState(modified_service);
-
             try
             {
+                uow.Services.Update(service);
                 uow.Complete();
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!ServiceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);
