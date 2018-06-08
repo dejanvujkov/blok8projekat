@@ -25,6 +25,8 @@ namespace RentApp.Models.Entities
         public string Address { get; set; }
         public double Longtitue { get; set; }
         public double Latitude { get; set; }
+        [ForeignKey("Service")]
+        public int ServiceId { get; set; }
         public Service Service { get; set; }
     }
 }

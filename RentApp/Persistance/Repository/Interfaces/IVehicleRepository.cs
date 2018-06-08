@@ -6,5 +6,6 @@ namespace RentApp.Persistance.Repository.Interfaces
     public interface IVehicleRepository : IRepository<Vehicle, int>
     {
         IEnumerable<Vehicle> GetRange(int pageIndex, int pageSize);
+        IEnumerable<Vehicle> GetVehiclesFromServiceId(int serviceId);
     }
 }

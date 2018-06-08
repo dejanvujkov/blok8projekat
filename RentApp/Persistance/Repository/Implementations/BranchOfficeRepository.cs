@@ -16,6 +16,12 @@ namespace RentApp.Persistance.Repository.Implementations
         {
             return Context.Offices.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
+
+        public IEnumerable<BranchOffice> GetOfficesFromServiceId(int serviceId)
+        {
+            return Context.Offices.Where(o => o.ServiceId == serviceId);
+        }
+
         protected RADBContext Context => context as RADBContext;
     }
 }

@@ -18,5 +18,10 @@ namespace RentApp.Persistance.Repository.Implementations
         {
             return Context.Vehicles.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
+
+        public IEnumerable<Vehicle> GetVehiclesFromServiceId(int serviceId)
+        {
+            return Context.Vehicles.Where(v => v.ServiceId == serviceId);
+        }
     }
 }
