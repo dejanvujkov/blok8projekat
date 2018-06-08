@@ -8,5 +8,7 @@ namespace RentApp.Persistance.Repository.Interfaces
         IEnumerable<Service> GetAllNonApproved();
         bool AddNewVehicle(Vehicle vehicle, Service service);
         bool RemoveVehicle(Vehicle vehicle, Service service);
+
+        IEnumerable<Service> GetServiceById(int id);
     }
 }

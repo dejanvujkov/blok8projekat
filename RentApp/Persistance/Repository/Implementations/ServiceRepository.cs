@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using RentApp.Models.Entities;
@@ -47,9 +48,14 @@ namespace RentApp.Persistance.Repository.Implementations
             return true;
         }
 
+        public IEnumerable<Service> GetServiceById(int id)
+        {
+            return Context.Services.Include(s => s.Manager).Include(v => v.Vehicles).Where(x => x.Id == id).ToList();
+        }
+
         //public override void Add(Service entity)
         //{
-            
+
         //}
     }
 }

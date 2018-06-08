@@ -17,8 +17,8 @@ namespace RentApp.Controllers
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            _uow.Reservations.GetAll();
-            return Ok();
+            var retVal = _uow.Reservations.GetAll();
+            return Ok(retVal);
         }
 
         [Route("reservations/add")]
@@ -53,7 +53,7 @@ namespace RentApp.Controllers
         {
             _uow.Reservations.Update(reservation);
             _uow.Complete();
-            return Ok();
+            return Ok(reservation);
         }
 
         protected override void Dispose(bool disposing)

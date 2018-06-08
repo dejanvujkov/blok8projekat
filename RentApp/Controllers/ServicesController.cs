@@ -119,27 +119,25 @@ namespace RentApp.Controllers
             return Ok(uow.Services.GetAllNonApproved());
         }
 
-        [Route("service/addVehicle ")]
-        [HttpPut]
-        public IHttpActionResult AddVehicle(Vehicle vehicle, Service service)
-        {
-            if (!uow.Services.AddNewVehicle(vehicle, service))
-            {
-                return NotFound();
-            }
-            uow.Complete();
-            return Ok(vehicle);
-        }
+        
 
-        [Route("service/removeVehicle")]
-        [HttpDelete]
-        public IHttpActionResult RemoveVehicle(Vehicle vehicle, Service service)
+        //[Route("service/removeVehicle")]
+        //[HttpDelete]
+        //public IHttpActionResult RemoveVehicle(Vehicle vehicle, Service service)
+        //{
+        //    if(!uow.Services.RemoveVehicle(vehicle, service))
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(vehicle);
+        //}
+
+        [HttpGet]
+        [Route("service/getbyid")]
+        public IHttpActionResult GetById(int id)
         {
-            if(!uow.Services.RemoveVehicle(vehicle, service))
-            {
-                return NotFound();
-            }
-            return Ok(vehicle);
+            var x = uow.Services.GetServiceById(id);
+            return Ok();
         }
 
         private bool ServiceExists(int id)

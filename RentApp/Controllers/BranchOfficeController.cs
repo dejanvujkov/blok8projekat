@@ -19,7 +19,7 @@ namespace RentApp.Controllers
         {
             _uow.BranchOffice.Add(office);
             _uow.Complete();
-            return Ok();
+            return Ok(office);
         }
 
         [Route("office/remove")]
@@ -44,16 +44,16 @@ namespace RentApp.Controllers
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            _uow.BranchOffice.GetAll();
-            return Ok();
+            var retVal = _uow.BranchOffice.GetAll();
+            return Ok(retVal);
         }
 
         [Route("offce/getrange")]
         [HttpGet]
         public IHttpActionResult GetRange(int pageSize, int pageIndex)
         {
-            _uow.BranchOffice.GetRange(pageIndex, pageSize);
-            return Ok();
+            var retVal = _uow.BranchOffice.GetRange(pageIndex, pageSize);
+            return Ok(retVal);
         }
 
         [Route("office/update")]
@@ -62,7 +62,7 @@ namespace RentApp.Controllers
         {
             _uow.BranchOffice.Update(office);
             _uow.Complete();
-            return Ok();
+            return Ok(office);
         }
 
         protected override void Dispose(bool disposing)
