@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -23,17 +24,19 @@ namespace RentApp.Controllers
             this.uow = uow;
         }
 
-        // GET: api/Services
-        public IEnumerable<Service> GetServices()
+        [Route("service/getAll")]
+        [HttpGet]
+        public IEnumerable<Service> GetAllServices()
         {
             return uow.Services.GetAll();
         }
 
-        // GET: api/Services/5
+        [Route("service/get")]
+        [HttpGet]
         [ResponseType(typeof(Service))]
         public IHttpActionResult GetService(int id)
         {
-            Service service = uow.Services.Find(i => i.Id == id).FirstOrDefault();
+            Service service = uow.Services.Get(id);
             if (service == null)
             {
                 return NotFound();
@@ -42,10 +45,18 @@ namespace RentApp.Controllers
             return Ok(service);
         }
 
+        [Route("service/find")]
+        [HttpGet]
+        public IHttpActionResult Find(Expression<Func<Service, bool>> predicate)
+        {
+            return Ok(uow.Services.Find(predicate).ToList());
+        }
+
         // PUT: api/Services/5
-        //Izmena
+        [Route("service/update")]
+        [HttpPut]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutService(Service service)
+        public IHttpActionResult Update(Service service)
         {
             if (!ModelState.IsValid)
             {
@@ -61,18 +72,21 @@ namespace RentApp.Controllers
             {
                 return NotFound();
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Services
+        [Route("service/add")]
+        [HttpPost]
         [ResponseType(typeof(Service))]
-        public IHttpActionResult PostService(Service service)
+        public IHttpActionResult AddService(Service service)
         {
-            if (!ModelState.IsValid)
+            service.Offices = new List<BranchOffice>();
+            service.Vehicles = new List<Vehicle>();
+
+            /*if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }*/
 
             uow.Services.Add(service);
             uow.Complete();
@@ -80,6 +94,8 @@ namespace RentApp.Controllers
             return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
         }
 
+        [Route("service/remove")]
+        [HttpDelete]
         // DELETE: api/Services/5
         [ResponseType(typeof(Service))]
         public IHttpActionResult DeleteService(int id)
@@ -95,7 +111,42 @@ namespace RentApp.Controllers
 
             return Ok(service);
         }
+        
+        [Route("service/getNonApproved")]
+        [HttpGet]
+        public IHttpActionResult GetAllNonApproved()
+        {
+            return Ok(uow.Services.GetAllNonApproved());
+        }
 
+        [Route("service/addVehicle ")]
+        [HttpPut]
+        public IHttpActionResult AddVehicle(Vehicle vehicle, Service service)
+        {
+            if (!uow.Services.AddNewVehicle(vehicle, service))
+            {
+                return NotFound();
+            }
+            uow.Complete();
+            return Ok(vehicle);
+        }
+
+        [Route("service/removeVehicle")]
+        [HttpDelete]
+        public IHttpActionResult RemoveVehicle(Vehicle vehicle, Service service)
+        {
+            if(!uow.Services.RemoveVehicle(vehicle, service))
+            {
+                return NotFound();
+            }
+            return Ok(vehicle);
+        }
+
+        private bool ServiceExists(int id)
+        {
+            return uow.Services.Find(e => e.Id == id).ToList().Count > 0;
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -103,11 +154,6 @@ namespace RentApp.Controllers
                 uow.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool ServiceExists(int id)
-        {
-            return uow.Services.Find(e => e.Id == id).ToList().Count > 0;
         }
     }
 }

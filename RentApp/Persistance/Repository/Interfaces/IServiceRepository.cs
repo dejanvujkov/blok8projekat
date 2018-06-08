@@ -6,7 +6,7 @@ namespace RentApp.Persistance.Repository.Interfaces
     public interface IServiceRepository : IRepository<Service, int>
     {
         IEnumerable<Service> GetAllNonApproved();
-        void AddNewVehicle(Vehicle vehicle, Service service);
-        void RemoveVehicle(Vehicle vehicle, Service service);
+        bool AddNewVehicle(Vehicle vehicle, Service service);
+        bool RemoveVehicle(Vehicle vehicle, Service service);
     }
 }

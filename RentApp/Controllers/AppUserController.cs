@@ -19,6 +19,14 @@ namespace RentApp.Controllers
             this.uow = uow;
         }
 
+        [Route("user/getRange")]
+        [HttpGet]
+        public IHttpActionResult GetRange(int page, int size)
+        {
+            uow.AppUsers.GetRange(page, size);
+            return Ok();
+        }
+
         [Route("user/getAll")]
         [HttpGet]
         public IHttpActionResult GetAllUsers()  

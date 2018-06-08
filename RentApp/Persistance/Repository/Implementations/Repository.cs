@@ -16,7 +16,7 @@ namespace RentApp.Persistance.Repository.Implementations
         {
             this.context = context;
         }
-        public TEntity Get(TPKey id)
+        public virtual TEntity Get(TPKey id)
         {
             return context.Set<TEntity>().Find(id);
         }
@@ -31,7 +31,7 @@ namespace RentApp.Persistance.Repository.Implementations
             return context.Set<TEntity>().Where(predicate);
         }
 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             context.Set<TEntity>().Add(entity);
         }

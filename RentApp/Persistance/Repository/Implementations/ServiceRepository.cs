@@ -14,29 +14,42 @@ namespace RentApp.Persistance.Repository.Implementations
         {
         }
 
+        public override Service Get(int id)
+        {
+            return Context.Services.Include(s => s.Manager).Include(w => w.Vehicles).Where(i => i.Id == id).FirstOrDefault();
+        }
+
         public IEnumerable<Service> GetAllNonApproved()
         {
-            return Context.Services.Where(s => !s.Approved);
+            return Context.Services.Include(s => s.Manager).Where(s => !s.Approved).ToList();
         }
 
-        public IEnumerable<Service> GetAllNonApproveda()
-        {
-            return Context.Services.Include(s => s.Manager).Where(s => !s.Approved);
-        }
-
-
-
-
-        public void AddNewVehicle(Vehicle vehicle, Service service)
+        public bool AddNewVehicle(Vehicle vehicle, Service service)
         {
             var s = Context.Services.FirstOrDefault(x => x.Id == service.Id);
+            if(s == null)
+            {
+                return false;
+            }
             s.Vehicles.Add(vehicle);
+            return true;
         }
 
-        public void RemoveVehicle(Vehicle vehicle, Service service)
+        public bool RemoveVehicle(Vehicle vehicle, Service service)
         {
+
             var s = Context.Services.FirstOrDefault(x => x.Id == service.Id);
-            s?.Vehicles.Remove(vehicle);
+            if(s == null)
+            {
+                return false;
+            }
+            s.Vehicles.Remove(vehicle);
+            return true;
         }
+
+        //public override void Add(Service entity)
+        //{
+            
+        //}
     }
 }
