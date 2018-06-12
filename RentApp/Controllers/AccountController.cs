@@ -312,6 +312,7 @@ namespace RentApp.Controllers
 
         // POST api/Account/Register
         [AllowAnonymous]
+        [HttpPost]
         [Route("Register")]
         public IHttpActionResult Register(RegisterBindingModel model)
         {
