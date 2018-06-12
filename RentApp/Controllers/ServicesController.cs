@@ -28,7 +28,8 @@ namespace RentApp.Controllers
         [HttpGet]
         public IEnumerable<Service> GetAllServices()
         {
-            return uow.Services.GetAll();
+            var x = uow.Services.GetAll();
+            return x;
         }
 
         [Route("service/get")]
@@ -44,6 +45,20 @@ namespace RentApp.Controllers
 
             return Ok(service);
         }
+        //TODO izmenuti tako da se povlace sva vozila i filijale
+        //[Route("service/get")]
+        //[HttpGet]
+        //[ResponseType(typeof(Service))]
+        //public IHttpActionResult GetService(int id)
+        //{
+        //    Service service = uow.Services.Get(id);
+        //    if (service == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(service);
+        //}
 
         [Route("service/find")]
         [HttpGet]
