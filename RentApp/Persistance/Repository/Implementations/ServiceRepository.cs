@@ -53,6 +53,11 @@ namespace RentApp.Persistance.Repository.Implementations
             return Context.Services.Include(s => s.Manager).Include(v => v.Vehicles).Where(x => x.Id == id).ToList();
         }
 
+        public Service GetDetails(int id)
+        {
+            return Context.Services.Include(o => o.Offices).Include(m => m.Manager).Include(v => v.Vehicles).Where(x => x.Id == id).FirstOrDefault();
+        }
+
         //public override void Add(Service entity)
         //{
 

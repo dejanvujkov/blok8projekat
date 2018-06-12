@@ -46,19 +46,18 @@ namespace RentApp.Controllers
             return Ok(service);
         }
         //TODO izmenuti tako da se povlace sva vozila i filijale
-        //[Route("service/get")]
-        //[HttpGet]
-        //[ResponseType(typeof(Service))]
-        //public IHttpActionResult GetService(int id)
-        //{
-        //    Service service = uow.Services.Get(id);
-        //    if (service == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(service);
-        //}
+        [Route("service/getDetails")]
+        [HttpGet]
+        [ResponseType(typeof(Service))]
+        public IHttpActionResult GetServiceDetails(int id)
+        {
+           Service service = uow.Services.GetDetails(id);
+            if (service == null)
+            {
+                return NotFound();
+            }
+            return Ok(service);
+        }
 
         [Route("service/find")]
         [HttpGet]
