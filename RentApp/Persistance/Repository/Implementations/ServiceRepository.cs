@@ -17,7 +17,7 @@ namespace RentApp.Persistance.Repository.Implementations
 
         public override Service Get(int id)
         {
-            return Context.Services.Include(s => s.Manager).Include(w => w.Vehicles).Where(i => i.Id == id).FirstOrDefault();
+            return Context.Services.Include(s => s.Manager).Include(w => w.Vehicles).FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Service> GetAllNonApproved()
@@ -53,14 +53,22 @@ namespace RentApp.Persistance.Repository.Implementations
             return Context.Services.Include(s => s.Manager).Include(v => v.Vehicles).Where(x => x.Id == id).ToList();
         }
 
-        public Service GetDetails(int id)
+        public IEnumerable<Service> GetAllApprovedServices()
         {
-            return Context.Services.Include(o => o.Offices).Include(m => m.Manager).Include(v => v.Vehicles).Where(x => x.Id == id).FirstOrDefault();
+            return Context.Services.Include(s => s.Manager).Include(v=>v.Vehicles).Where(n=>n.Approved);
         }
 
-        //public override void Add(Service entity)
-        //{
+        public Service GetDetails(int id)
+        {
+            var vehicles = Context.Vehicles.Where(v => v.Available && v.ServiceId == id).ToList();
+            var service = Context.Services.Include(o => o.Offices).Include(m => m.Manager).FirstOrDefault(q => q.Id == id);
+            if (service != null)
+            {
+                service.Vehicles = vehicles;
+                return service;
+            }
 
-        //}
+            return null;
+        }
     }
 }

@@ -45,7 +45,7 @@ namespace RentApp.Controllers
 
             return Ok(service);
         }
-        //TODO izmenuti tako da se povlace sva vozila i filijale
+
         [Route("service/getDetails")]
         [HttpGet]
         [ResponseType(typeof(Service))]
@@ -133,19 +133,6 @@ namespace RentApp.Controllers
             return Ok(uow.Services.GetAllNonApproved());
         }
 
-        
-
-        //[Route("service/removeVehicle")]
-        //[HttpDelete]
-        //public IHttpActionResult RemoveVehicle(Vehicle vehicle, Service service)
-        //{
-        //    if(!uow.Services.RemoveVehicle(vehicle, service))
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(vehicle);
-        //}
-
         [HttpGet]
         [Route("service/getbyid")]
         public IHttpActionResult GetById(int id)
@@ -166,6 +153,13 @@ namespace RentApp.Controllers
                 uow.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [Route("service/getAllApprovedServices")]
+        [HttpGet]
+        public IHttpActionResult GetAllApprovedServices()
+        {
+            return Ok(uow.Services.GetAllApprovedServices());
         }
     }
 }
