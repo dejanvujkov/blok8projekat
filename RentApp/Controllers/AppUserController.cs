@@ -75,5 +75,20 @@ namespace RentApp.Controllers
             base.Dispose(disposing);
         }
 
+        [Route("user/getAllUnapproved")]
+        [HttpGet]
+        public IHttpActionResult GetAllUnapprovedUsers()
+        {
+            return Ok(uow.AppUsers.GetAllUnapprovedUsers());
+        }
+
+        [Route("user/approve")]
+        [HttpPut]
+        public IHttpActionResult ApproveUser(AppUser user)
+        {
+            uow.AppUsers.ApproveUser(user);
+            return Ok();
+        }
+
     }
 }

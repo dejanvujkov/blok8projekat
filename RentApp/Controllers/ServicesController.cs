@@ -161,5 +161,13 @@ namespace RentApp.Controllers
         {
             return Ok(uow.Services.GetAllApprovedServices());
         }
+
+        [Route("service/approve")]
+        [HttpPut]
+        public IHttpActionResult ApproveSerivce(Service service)
+        {
+            uow.Services.ApproveService(service);
+            return Ok();
+        }
     }
 }

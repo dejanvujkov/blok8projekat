@@ -11,5 +11,6 @@ namespace RentApp.Persistance.Repository.Interfaces
         Service GetDetails(int id);
         IEnumerable<Service> GetServiceById(int id);
         IEnumerable<Service> GetAllApprovedServices();
+        void ApproveService(Service service);
     }
 }

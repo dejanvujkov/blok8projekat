@@ -58,17 +58,25 @@ namespace RentApp.Persistance.Repository.Implementations
             return Context.Services.Include(s => s.Manager).Include(v=>v.Vehicles).Where(n=>n.Approved);
         }
 
+        public void ApproveService(Service service)
+        {
+            var s = Context.Services.FirstOrDefault(q => q.Id == service.Id);
+            if (s != null && !s.Approved)
+            {
+                s.Approved = true;
+                Context.Entry(s).State = EntityState.Modified;
+                Context.SaveChanges();
+            }
+        }
+
         public Service GetDetails(int id)
         {
             var vehicles = Context.Vehicles.Where(v => v.Available && v.ServiceId == id).ToList();
             var service = Context.Services.Include(o => o.Offices).Include(m => m.Manager).FirstOrDefault(q => q.Id == id);
-            if (service != null)
-            {
-                service.Vehicles = vehicles;
-                return service;
-            }
+            if (service == null) return null;
+            service.Vehicles = vehicles;
+            return service;
 
-            return null;
         }
     }
 }

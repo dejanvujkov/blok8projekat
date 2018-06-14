@@ -6,5 +6,7 @@ namespace RentApp.Persistance.Repository.Interfaces
     public interface IAppUserRepositroy : IRepository<AppUser, int>
     {
         IEnumerable<AppUser> GetRange(int pageIndex, int size);
+        IEnumerable<AppUser> GetAllUnapprovedUsers();
+        void ApproveUser(AppUser user);
     }
 }
