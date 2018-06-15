@@ -90,5 +90,20 @@ namespace RentApp.Controllers
             return Ok();
         }
 
+        [Route("user/getAllManagers")]
+        [HttpGet]
+        public IHttpActionResult GetAllManagers()
+        {
+            return Ok(uow.AppUsers.GetAllManagers());
+        }
+
+        [Route("user/getUserDetails")]
+        [HttpGet]
+        public IHttpActionResult GetUserDetail(string username)
+        {
+            var user = uow.AppUsers.GetUserDetails(username);
+            return Ok(user);
+        }
+
     }
 }

@@ -26,6 +26,7 @@ namespace RentApp.Controllers
         public IHttpActionResult Add(Reservation reservation)
         {
             _uow.Reservations.Add(reservation);
+            _uow.Complete();
             return Ok();
         }
 
