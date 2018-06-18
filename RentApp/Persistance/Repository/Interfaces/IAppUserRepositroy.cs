@@ -11,5 +11,6 @@ namespace RentApp.Persistance.Repository.Interfaces
         void ApproveUser(AppUser user);
         IEnumerable<RAIdentityUser> GetAllManagers();
         IdentityUser GetUserDetails(string username);
+        void BlockManager(AppUser manager);
     }
 }

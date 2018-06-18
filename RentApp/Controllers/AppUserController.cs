@@ -105,5 +105,13 @@ namespace RentApp.Controllers
             return Ok(user);
         }
 
+        [Route("user/blockManager")]
+        [HttpPut]
+        public IHttpActionResult BlockManager(AppUser manager)
+        {
+            uow.AppUsers.BlockManager(manager);
+            uow.Complete();
+            return Ok();
+        }
     }
 }

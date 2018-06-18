@@ -12,37 +12,12 @@ namespace RentApp.Models.Entities
         public string Surname { get; set; }
         public bool Approved { get; set; }
         public string ImagePath { get; set; }
+        public bool Blocked { get; set; }
 
         public AppUser()
         {
             Approved = false;
+            Blocked = false;
         }
-
-        //public AppUser(string username, string password, string name, string surname, string email) : this()
-        //{
-        //    Username = username;
-        //    Password = password;
-        //    Name = name;
-        //    Surname = surname;
-        //    Email = email;
-        //}
-
-        //public AppUser(string username, string password, string name, string surname, string email, string imagePath) : this()
-        //{
-        //    Username = username;
-        //    Password = password;
-        //    Name = name;
-        //    Surname = surname;
-        //    Email = email;
-        //    ImagePath = imagePath;
-        //}
-
-    }
-
-    public enum UserType
-    {
-        Client = 1,
-        Manager,
-        Administrator
     }
 }

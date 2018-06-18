@@ -19,7 +19,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44358</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -284,6 +284,10 @@
     <Compile Include="Migrations\201806080913439_Check.Designer.cs">
       <DependentUpon>201806080913439_Check.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806181423346_FieldAddedToAppUser.cs" />
+    <Compile Include="Migrations\201806181423346_FieldAddedToAppUser.Designer.cs">
+      <DependentUpon>201806181423346_FieldAddedToAppUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -397,6 +401,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806080913439_Check.resx">
       <DependentUpon>201806080913439_Check.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806181423346_FieldAddedToAppUser.resx">
+      <DependentUpon>201806181423346_FieldAddedToAppUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
