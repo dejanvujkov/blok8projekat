@@ -66,6 +66,13 @@ namespace RentApp.Persistance.Repository.Implementations
             Context.Entry(blocked).State = EntityState.Modified;
         }
 
+        public void UploadImage(string img, int id)
+        {
+            var user = Context.AppUsers.FirstOrDefault(u => u.Id == id);
+            user.ImagePath = img;
+            Context.Entry(user).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
 
         protected RADBContext Context => context as RADBContext;
     }

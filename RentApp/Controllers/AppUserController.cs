@@ -3,9 +3,12 @@ using RentApp.Persistance.Repository.Implementations;
 using RentApp.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace RentApp.Controllers
@@ -17,6 +20,30 @@ namespace RentApp.Controllers
         public AppUserController(IUnitOfWork uow)
         {
             this.uow = uow;
+        }
+
+        [Route("user/uploadImage/{id}")]
+        [HttpPost]
+        public IHttpActionResult Upload(int id)
+        {
+            string imageName = null;
+            var httpRequest = HttpContext.Current.Request;
+
+            var postedFile = httpRequest.Files["Image"];
+
+            string extension = Path.GetExtension(postedFile.FileName);
+            //Create custom filename
+            imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + extension;
+            var filePath = HttpContext.Current.Server.MapPath("~/Image/" + imageName);
+            postedFile.SaveAs(filePath);
+
+            byte[] imageArray = System.IO.File.ReadAllBytes(filePath);
+            string base64 = Convert.ToBase64String(imageArray);
+            string prefix = "data:image/" + extension + ";base64,";
+            string base64String = prefix+base64;
+            uow.AppUsers.UploadImage(base64String, id);
+            return Ok();
         }
 
         [Route("user/getRange")]

@@ -12,5 +12,7 @@ namespace RentApp.Persistance.Repository.Interfaces
         IEnumerable<RAIdentityUser> GetAllManagers();
         IdentityUser GetUserDetails(string username);
         void BlockManager(AppUser manager);
+
+        void UploadImage(string s, int id);
     }
 }
