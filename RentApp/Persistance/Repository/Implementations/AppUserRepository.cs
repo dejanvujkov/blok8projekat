@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 using RentApp.Models.Entities;
 using RentApp.Persistance.Repository.Interfaces;
+using RentApp.Services;
 
 namespace RentApp.Persistance.Repository.Implementations
 {
@@ -26,14 +27,23 @@ namespace RentApp.Persistance.Repository.Implementations
 
         public void ApproveUser(AppUser user)
         {
-            //TODO ispraviti ovde exception da ne baca
             var u = Context.AppUsers.FirstOrDefault(s => s.Id == user.Id);
             if (u != null && !u.Approved)
             {
                 u.Approved = true;
             }
             Context.Entry(u).State = EntityState.Modified;
+            SendMailToUserId(user.Id);
             Context.SaveChanges();
+        }
+
+        private void SendMailToUserId(int userId)
+        {
+            var u = Context.Users.FirstOrDefault(user => user.AppUser.Id == userId);
+            if (u == null) return;
+            const string subject = "Odobren nalog";
+            const string content = "Postovani, \nVas nalog odobren je od strane administratora i sada ste u mogucnosti da koristite funkcionalnosti aplikacije.\nSrdacno,\nRent-a-car tim";
+            smtp.SendMail(subject, content, u.Email);
         }
 
         public IEnumerable<RAIdentityUser> GetAllManagers()
@@ -75,5 +85,6 @@ namespace RentApp.Persistance.Repository.Implementations
         }
 
         protected RADBContext Context => context as RADBContext;
+        private SmtpService smtp = new SmtpService();
     }
 }

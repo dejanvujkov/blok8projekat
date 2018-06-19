@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using RentApp.Services;
 
 namespace RentApp.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class ValuesController : ApiController
     {
+        private readonly ISmtpService _smtp;
+
+        public ValuesController(ISmtpService smtp)
+        {
+            _smtp = smtp;
+        }
+
+
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
         }
 
         // GET api/values/5
@@ -23,8 +28,9 @@ namespace RentApp.Controllers
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public void Post(U u)
         {
+            _smtp.SendMail(u.Subject,u.Content, u.MailTo);
         }
 
         // PUT api/values/5
@@ -35,6 +41,13 @@ namespace RentApp.Controllers
         // DELETE api/values/5
         public void Delete(int id)
         {
+        }
+
+        public class U
+        {
+            public string Subject { get; set; }
+            public string Content { get; set; }
+            public string MailTo { get; set; }
         }
     }
 }
