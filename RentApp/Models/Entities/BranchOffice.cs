@@ -11,11 +11,11 @@ namespace RentApp.Models.Entities
         {
         }
 
-        public BranchOffice(string imagePath, string address, double longtitue, double latitude, Service service) : this()
+        public BranchOffice(string imagePath, string address, double longitude, double latitude, Service service) : this()
         {
             ImagePath = imagePath;
             Address = address;
-            Longtitue = longtitue;
+            Longitude = longitude;
             Latitude = latitude;
             Service = service;
         }
@@ -23,7 +23,7 @@ namespace RentApp.Models.Entities
         public int Id { get; set; }
         public string ImagePath { get; set; }
         public string Address { get; set; }
-        public double Longtitue { get; set; }
+        public double Longitude { get; set; }
         public double Latitude { get; set; }
         [ForeignKey("Service")]
         public int ServiceId { get; set; }

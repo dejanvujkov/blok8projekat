@@ -43,7 +43,7 @@ namespace RentApp.Controllers
             string prefix = "data:image/" + extension + ";base64,";
             string base64String = prefix+base64;
             uow.AppUsers.UploadImage(base64String, id);
-            return Ok();
+            return Ok(base64String);
         }
 
         [Route("user/getRange")]
