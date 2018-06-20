@@ -288,6 +288,10 @@
     <Compile Include="Migrations\201806181423346_FieldAddedToAppUser.Designer.cs">
       <DependentUpon>201806181423346_FieldAddedToAppUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806192239487_ispravkaBranchOfficeModel-a.cs" />
+    <Compile Include="Migrations\201806192239487_ispravkaBranchOfficeModel-a.Designer.cs">
+      <DependentUpon>201806192239487_ispravkaBranchOfficeModel-a.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -407,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806181423346_FieldAddedToAppUser.resx">
       <DependentUpon>201806181423346_FieldAddedToAppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806192239487_ispravkaBranchOfficeModel-a.resx">
+      <DependentUpon>201806192239487_ispravkaBranchOfficeModel-a.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
