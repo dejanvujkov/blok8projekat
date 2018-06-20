@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using RentApp.Models.Entities;
 using RentApp.Persistance.Repository.Interfaces;
+using RentApp.Services;
 
 namespace RentApp.Persistance.Repository.Implementations
 {
@@ -66,6 +67,13 @@ namespace RentApp.Persistance.Repository.Implementations
                 s.Approved = true;
                 Context.Entry(s).State = EntityState.Modified;
                 Context.SaveChanges();
+                var manager = Context.Users.FirstOrDefault(m => m.AppUserId == service.ManagerId);
+                if (manager == null) return;
+                var subject = "Odobren servis";
+                var body =
+                    "Postovani,\nOvim putem zelimo da vas obavestimo da je Vas servis odobren i dostupan korisnicima da ga koriste.\nSrecan rad,\nRent-a-car tim.";
+                var smtp = new SmtpService();
+                smtp.SendMail(subject, body, manager.Email);
             }
         }
 
