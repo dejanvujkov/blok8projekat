@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using RentApp.Models.Entities;
@@ -16,6 +17,12 @@ namespace RentApp.Persistance.Repository.Implementations
         {
             return !Context.Reservations.Any(r => r.Vehicle == vehicle && r.TimeTo.Date < fromThisTime.Date);
         }
+
+        public List<Reservation> GetAllWithSecificVehicle(int vehicle)
+        {
+            return Context.Reservations.Where(x => x.VehicleId == vehicle).ToList();
+        }
+
         protected RADBContext Context => context as RADBContext;
     }
 }

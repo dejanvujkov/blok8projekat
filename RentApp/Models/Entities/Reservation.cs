@@ -18,15 +18,9 @@ namespace RentApp.Models.Entities
         public int TakeAwayBranchOfficeId { get; set; }
         public BranchOffice TakeAwayBranchOffice { get; set; }
 
-        public Reservation(AppUser user, DateTime from, DateTime to, Vehicle vehicle, Service service, BranchOffice take, BranchOffice ret)
+        public Reservation()
         {
-            User = user;
-            TimeFrom = from;
-            TimeTo = to;
-            Vehicle = vehicle;
-            Service = service;
-            ReturnBranchOffice = ret;
-            TakeAwayBranchOffice = take;
+           
         }
     }
 }

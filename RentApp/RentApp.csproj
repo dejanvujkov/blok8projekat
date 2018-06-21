@@ -301,6 +301,7 @@
     <Compile Include="Models\Entities\Reservation.cs" />
     <Compile Include="Models\Entities\Services.cs" />
     <Compile Include="Models\Entities\Vehicle.cs" />
+    <Compile Include="Models\ReservationDateModel.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\Implementations\AppUserRepository.cs" />
     <Compile Include="Persistance\Repository\Implementations\BranchOfficeRepository.cs" />

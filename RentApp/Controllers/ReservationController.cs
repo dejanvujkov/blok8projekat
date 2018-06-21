@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
+using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 
@@ -25,6 +27,30 @@ namespace RentApp.Controllers
         [HttpPut]
         public IHttpActionResult Add(Reservation reservation)
         {
+            List<Reservation> reservations = _uow.Reservations.GetAllWithSecificVehicle(reservation.VehicleId);
+            bool reserved = false;
+            List<ReservationDateModel> reservedDates = new List<ReservationDateModel>();
+
+            foreach(var r in reservations){
+                if(r.TimeFrom >= reservation.TimeFrom && r.TimeFrom <= reservation.TimeTo){
+                    reservedDates.Add(new ReservationDateModel() { Start = r.TimeFrom, End = r.TimeTo });
+                    reserved = true;
+                }
+                else if (r.TimeTo >= reservation.TimeFrom && r.TimeTo <= reservation.TimeTo)
+                {
+                    reservedDates.Add(new ReservationDateModel() { Start = r.TimeFrom, End = r.TimeTo });
+                    reserved = true;
+                }
+                else
+                {
+                    reservedDates.Add(new ReservationDateModel() { Start = r.TimeFrom, End = r.TimeTo });
+                }
+            }
+            if (reserved)
+            {
+                return Ok(reservedDates);
+            }
+
             _uow.Reservations.Add(reservation);
             _uow.Complete();
             return Ok();
