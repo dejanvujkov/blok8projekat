@@ -86,5 +86,13 @@ namespace RentApp.Persistance.Repository.Implementations
             return service;
 
         }
+
+        public void UploadImage(string base64String, int id)
+        {
+            var service = Context.Services.FirstOrDefault(u => u.Id == id);
+            service.ImagePath = base64String;
+            Context.Entry(service).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
     }
 }

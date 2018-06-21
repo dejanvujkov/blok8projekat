@@ -12,5 +12,6 @@ namespace RentApp.Persistance.Repository.Interfaces
         IEnumerable<Service> GetServiceById(int id);
         IEnumerable<Service> GetAllApprovedServices();
         void ApproveService(Service service);
+        void UploadImage(string base64String, int id);
     }
 }

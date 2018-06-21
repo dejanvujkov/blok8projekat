@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RentApp.Models.Entities;
@@ -105,7 +107,7 @@ namespace RentApp.Controllers
             uow.Services.Add(service);
             uow.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = service.Id }, service);
+            return Ok(service.Id);
         }
 
         [Route("service/remove")]
@@ -168,6 +170,30 @@ namespace RentApp.Controllers
         {
             uow.Services.ApproveService(service);
             return Ok();
+        }
+
+        [Route("service/upload/{id}")]
+        [HttpPut]
+        public IHttpActionResult UploadImage(int id)
+        {
+            string imageName = null;
+            var httpRequest = HttpContext.Current.Request;
+
+            var postedFile = httpRequest.Files["Image"];
+
+            string extension = Path.GetExtension(postedFile.FileName);
+            //Create custom filename
+            imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + extension;
+            var filePath = HttpContext.Current.Server.MapPath("~/Image/" + imageName);
+            postedFile.SaveAs(filePath);
+
+            byte[] imageArray = System.IO.File.ReadAllBytes(filePath);
+            string base64 = Convert.ToBase64String(imageArray);
+            string prefix = "data:image/" + extension + ";base64,";
+            string base64String = prefix + base64;
+            uow.Services.UploadImage(base64String, id);
+            return Ok(base64String);
         }
     }
 }
