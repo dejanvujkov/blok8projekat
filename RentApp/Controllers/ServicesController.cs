@@ -195,5 +195,20 @@ namespace RentApp.Controllers
             uow.Services.UploadImage(base64String, id);
             return Ok(base64String);
         }
+
+        [Route("service/addVehicle/{id}")]
+        [HttpPost]
+        public IHttpActionResult AddNewVehicle(int id, Vehicle vehicle)
+        {
+            uow.Services.AddNewVehicle(vehicle, id);
+            return Ok(vehicle.Id);
+        }
+
+        [Route("service/getServicesForManager/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetServicesForManager(int id)
+        {
+            return Ok(uow.Services.GetServicesForManager(id));
+        }
     }
 }

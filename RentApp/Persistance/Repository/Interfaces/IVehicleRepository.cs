@@ -7,5 +7,6 @@ namespace RentApp.Persistance.Repository.Interfaces
     {
         IEnumerable<Vehicle> GetRange(int pageIndex, int pageSize);
         IEnumerable<Vehicle> GetVehiclesFromServiceId(int serviceId);
+        void UploadImage(string image, int id);
     }
 }

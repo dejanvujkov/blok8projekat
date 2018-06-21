@@ -26,15 +26,16 @@ namespace RentApp.Persistance.Repository.Implementations
             return Context.Services.Include(s => s.Manager).Where(s => !s.Approved).ToList();
         }
 
-        public bool AddNewVehicle(Vehicle vehicle, Service service)
+        public void AddNewVehicle(Vehicle vehicle, int serviceId)
         {
-            var s = Context.Services.FirstOrDefault(x => x.Id == service.Id);
+            var s = Get(serviceId);
             if(s == null)
             {
-                return false;
+                return;
             }
             s.Vehicles.Add(vehicle);
-            return true;
+            Context.Entry(s).State = EntityState.Modified;
+            Context.SaveChanges();
         }
 
         public bool RemoveVehicle(Vehicle vehicle, Service service)
@@ -93,6 +94,11 @@ namespace RentApp.Persistance.Repository.Implementations
             service.ImagePath = base64String;
             Context.Entry(service).State = EntityState.Modified;
             Context.SaveChanges();
+        }
+
+        public IEnumerable<Service> GetServicesForManager(int id)
+        {
+            return Context.Services.Where(s => s.ManagerId == id).Include(v=>v.Vehicles).Include(o=>o.Offices);
         }
     }
 }

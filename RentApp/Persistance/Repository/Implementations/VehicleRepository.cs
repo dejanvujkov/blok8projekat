@@ -23,5 +23,13 @@ namespace RentApp.Persistance.Repository.Implementations
         {
             return Context.Vehicles.Where(v => v.ServiceId == serviceId);
         }
+
+        public void UploadImage(string image, int id)
+        {
+            var vehicle = Context.Vehicles.FirstOrDefault(u => u.Id == id);
+            vehicle.ImagePath = image;
+            Context.Entry(vehicle).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
     }
 }
