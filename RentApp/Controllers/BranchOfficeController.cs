@@ -1,4 +1,8 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
 using RentApp.Models.Entities;
 using RentApp.Persistance.UnitOfWork;
 
@@ -63,6 +67,30 @@ namespace RentApp.Controllers
             _uow.BranchOffice.Update(office);
             _uow.Complete();
             return Ok(office);
+        }
+
+        [Route("office/uploadToOffice/{id}")]
+        [HttpPut]
+        public IHttpActionResult UploadImage(int id)
+        {
+            string imageName = null;
+            var httpRequest = HttpContext.Current.Request;
+
+            var postedFile = httpRequest.Files["Image"];
+
+            string extension = Path.GetExtension(postedFile.FileName);
+            //Create custom filename
+            imageName = new String(Path.GetFileNameWithoutExtension(postedFile.FileName).Take(10).ToArray()).Replace(" ", "-");
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + extension;
+            var filePath = HttpContext.Current.Server.MapPath("~/Image/" + imageName);
+            postedFile.SaveAs(filePath);
+
+            byte[] imageArray = System.IO.File.ReadAllBytes(filePath);
+            string base64 = Convert.ToBase64String(imageArray);
+            string prefix = "data:image/" + extension + ";base64,";
+            string base64String = prefix + base64;
+            _uow.BranchOffice.UploadImage(base64String, id);
+            return Ok(base64String);
         }
 
         protected override void Dispose(bool disposing)

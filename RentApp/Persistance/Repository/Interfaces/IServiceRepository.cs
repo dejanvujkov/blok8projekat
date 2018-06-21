@@ -14,5 +14,6 @@ namespace RentApp.Persistance.Repository.Interfaces
         void ApproveService(Service service);
         void UploadImage(string base64String, int id);
         IEnumerable<Service> GetServicesForManager(int id);
+        void AddNewBranchOffice(int id, BranchOffice office);
     }
 }

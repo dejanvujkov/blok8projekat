@@ -22,6 +22,14 @@ namespace RentApp.Persistance.Repository.Implementations
             return Context.Offices.Where(o => o.ServiceId == serviceId);
         }
 
+        public void UploadImage(string image, int id)
+        {
+            var office = Context.Offices.FirstOrDefault(u => u.Id == id);
+            office.ImagePath = image;
+            Context.Entry(office).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
+
         protected RADBContext Context => context as RADBContext;
     }
 }

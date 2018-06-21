@@ -7,5 +7,6 @@ namespace RentApp.Persistance.Repository.Interfaces
     {
         IEnumerable<BranchOffice> GetRange(int pageIndex, int pageSize);
         IEnumerable<BranchOffice> GetOfficesFromServiceId(int serviceId);
+        void UploadImage(string image, int id);
     }
 }

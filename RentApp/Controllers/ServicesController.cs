@@ -204,6 +204,14 @@ namespace RentApp.Controllers
             return Ok(vehicle.Id);
         }
 
+        [Route("service/addOffice/{id}")]
+        [HttpPost]
+        public IHttpActionResult AddBranchOfficeToService(int id, BranchOffice office)
+        {
+            uow.Services.AddNewBranchOffice(id, office);
+            return Ok(office.Id);
+        }
+
         [Route("service/getServicesForManager/{id}")]
         [HttpGet]
         public IHttpActionResult GetServicesForManager(int id)

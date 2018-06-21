@@ -33,8 +33,19 @@ namespace RentApp.Persistance.Repository.Implementations
             {
                 return;
             }
+            if(s.Vehicles == null) s.Vehicles = new List<Vehicle>();
             s.Vehicles.Add(vehicle);
             Context.Entry(s).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
+
+        public void AddNewBranchOffice(int id, BranchOffice office)
+        {
+            var service = Get(id);
+            if (service == null) return;
+            if(service.Offices==null) service.Offices = new List<BranchOffice>();
+            service.Offices.Add(office);
+            Context.Entry(service).State = EntityState.Modified;
             Context.SaveChanges();
         }
 
@@ -100,5 +111,7 @@ namespace RentApp.Persistance.Repository.Implementations
         {
             return Context.Services.Where(s => s.ManagerId == id).Include(v=>v.Vehicles).Include(o=>o.Offices);
         }
+
+        
     }
 }
