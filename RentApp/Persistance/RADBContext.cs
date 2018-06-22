@@ -15,6 +15,9 @@ namespace RentApp.Persistance
         public virtual DbSet<BranchOffice> Offices { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+
+
 
         public Guid id;
         public RADBContext() : base("name=RADB")

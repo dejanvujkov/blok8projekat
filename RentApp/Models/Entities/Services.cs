@@ -17,7 +17,8 @@ namespace RentApp.Models.Entities
         public AppUser Manager { get; set; }
         public string Description { get; set; }
         public string Email { get; set; }
-
+        public float Rate { get; set; }
+        public int NumOfRates { get; set; }
         public Service()
         {
 
@@ -35,5 +36,5 @@ namespace RentApp.Models.Entities
         //    Vehicles = new List<Vehicle>();
         //}
     }
-    
+
 }

@@ -27,6 +27,8 @@ namespace RentApp.Persistance.UnitOfWork
         [Dependency]
         public IReservationRepository Reservations { get; set; }
 
+        [Dependency]
+        public ICommentRepository Comments { get; set; }
 
         public RAUnitOfWork(DbContext context)
         {

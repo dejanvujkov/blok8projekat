@@ -112,6 +112,18 @@ namespace RentApp.Persistance.Repository.Implementations
             return Context.Services.Where(s => s.ManagerId == id).Include(v=>v.Vehicles).Include(o=>o.Offices);
         }
 
-        
+        public float Rate(int serviceId, float rate)
+        {
+            var service = Context.Services.Where(x => x.Id == serviceId).FirstOrDefault();
+            int num = service.NumOfRates;
+            float oldAvgRate = service.Rate;
+            float newAvgRate = (num * oldAvgRate + rate) / ++num;
+            service.Rate = newAvgRate;
+            service.NumOfRates = num;
+            Context.Entry(service).State = EntityState.Modified;
+            Context.SaveChanges();
+            return newAvgRate;
+        }
+
     }
 }

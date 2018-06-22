@@ -264,6 +264,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppUserController.cs" />
     <Compile Include="Controllers\BranchOfficeController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
@@ -292,10 +293,16 @@
     <Compile Include="Migrations\201806192239487_ispravkaBranchOfficeModel-a.Designer.cs">
       <DependentUpon>201806192239487_ispravkaBranchOfficeModel-a.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806220347110_commentTable.cs" />
+    <Compile Include="Migrations\201806220347110_commentTable.Designer.cs">
+      <DependentUpon>201806220347110_commentTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CommentSendModel.cs" />
     <Compile Include="Models\Entities\BranchOffice.cs" />
+    <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Entities\RAIdentityUser.cs" />
     <Compile Include="Models\Entities\AppUser.cs" />
     <Compile Include="Models\Entities\Reservation.cs" />
@@ -305,12 +312,14 @@
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\Implementations\AppUserRepository.cs" />
     <Compile Include="Persistance\Repository\Implementations\BranchOfficeRepository.cs" />
+    <Compile Include="Persistance\Repository\Implementations\CommentRepository.cs" />
     <Compile Include="Persistance\Repository\Implementations\Repository.cs" />
     <Compile Include="Persistance\Repository\Implementations\ReservationRepository.cs" />
     <Compile Include="Persistance\Repository\Implementations\ServiceRepository.cs" />
     <Compile Include="Persistance\Repository\Implementations\VehicleRepository.cs" />
     <Compile Include="Persistance\Repository\Interfaces\IAppUserRepositroy.cs" />
     <Compile Include="Persistance\Repository\Interfaces\IBranchOfficeRepository.cs" />
+    <Compile Include="Persistance\Repository\Interfaces\IComment.cs" />
     <Compile Include="Persistance\Repository\Interfaces\IRepository.cs" />
     <Compile Include="Persistance\Repository\Interfaces\IReservationRepository.cs" />
     <Compile Include="Persistance\Repository\Interfaces\IServiceRepository.cs" />
@@ -415,6 +424,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806192239487_ispravkaBranchOfficeModel-a.resx">
       <DependentUpon>201806192239487_ispravkaBranchOfficeModel-a.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806220347110_commentTable.resx">
+      <DependentUpon>201806220347110_commentTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

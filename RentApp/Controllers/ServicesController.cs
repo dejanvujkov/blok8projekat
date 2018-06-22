@@ -26,6 +26,15 @@ namespace RentApp.Controllers
             this.uow = uow;
         }
 
+        [Route("service/rate")]
+        [HttpPost]
+        public IHttpActionResult Rate(Service service)
+        {
+            float newAvgRate = uow.Services.Rate(service.Id, service.Rate);
+            return Ok(newAvgRate);
+        }
+
+
         [Route("service/getAll")]
         [HttpGet]
         public IEnumerable<Service> GetAllServices()
