@@ -19,6 +19,7 @@ namespace RentApp.Models.Entities
         public string Email { get; set; }
         public float Rate { get; set; }
         public int NumOfRates { get; set; }
+        public List<Comment> Comments { get; set; }
         public Service()
         {
 

@@ -7,13 +7,13 @@ namespace RentApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class commentTable : IMigrationMetadata
+    public sealed partial class DodatiKomentari : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(commentTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DodatiKomentari));
         
         string IMigrationMetadata.Id
         {
-            get { return "201806220347110_commentTable"; }
+            get { return "201806220643287_DodatiKomentari"; }
         }
         
         string IMigrationMetadata.Source
